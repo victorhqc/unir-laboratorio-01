@@ -308,6 +308,11 @@ public class MainWindow extends javax.swing.JFrame {
                 distributor,
                 this.getChosenPharmacyBranches()
         );
+        
+        JFrame confirm = new ConfirmWindow(medicineOrder);
+        
+        confirm.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        confirm.setVisible(true);
     }//GEN-LAST:event_confirmBtnMouseReleased
 
     /**
