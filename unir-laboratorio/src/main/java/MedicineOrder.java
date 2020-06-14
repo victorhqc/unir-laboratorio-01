@@ -29,4 +29,8 @@ public class MedicineOrder {
         this.branches = branches;
         this.distributor = distributor;
     }
+    
+    public String getDistributorName() {
+        return this.distributor.getName();
+    }
 }

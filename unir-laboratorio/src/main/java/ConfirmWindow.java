@@ -16,6 +16,7 @@ public class ConfirmWindow extends javax.swing.JFrame {
     public ConfirmWindow(MedicineOrder order) {
         initComponents();
         this.order = order;
+        this.setData();
     }
 
     /**
@@ -130,6 +131,19 @@ public class ConfirmWindow extends javax.swing.JFrame {
        this.dispose();
     }//GEN-LAST:event_cancelBtnMouseReleased
     
+    private void setData() {
+        this.setTitle();
+    }
+    
+    private void setTitle() {
+        String title = this.titleLabel.getText();
+        String updated = title.replaceAll(
+                "\\{\\{ distributor \\}\\}",
+                this.order.getDistributorName()
+        );
+        
+        this.titleLabel.setText(updated);
+    }
     
     private MedicineOrder order;
 
