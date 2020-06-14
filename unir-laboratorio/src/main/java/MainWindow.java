@@ -64,7 +64,7 @@ public class MainWindow extends javax.swing.JFrame {
         title.setText("Pedido de Medicamento");
 
         medicineName.setFont(new java.awt.Font("Helvetica", 0, 13)); // NOI18N
-        medicineName.setToolTipText("Nomnre...");
+        medicineName.setToolTipText("Nombre...");
         medicineName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 medicineNameActionPerformed(evt);
