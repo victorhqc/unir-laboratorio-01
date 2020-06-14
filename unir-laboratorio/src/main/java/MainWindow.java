@@ -305,9 +305,9 @@ public class MainWindow extends javax.swing.JFrame {
                 this.getMedicineName(),
                 this.getMedicineAmount(),
                 kind,
-                distributor,
-                this.getChosenPharmacyBranches()
+                distributor
         );
+        medicineOrder.addBranches(this.getChosenPharmacyBranches());
         
         JFrame confirm = new ConfirmWindow(medicineOrder);
         

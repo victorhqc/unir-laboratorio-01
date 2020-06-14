@@ -18,4 +18,15 @@ public class PharmacyBranch {
     public String getName() {
         return this.name;
     }
+    
+    public String getAddress() {
+        switch (this.name) {
+            case "main":
+                return "Calle de la Rosa n. 28";
+            case "secondary":
+                return "Calle Alcazabilla n. 3";
+            default:
+                return null;
+        }
+    }
 }

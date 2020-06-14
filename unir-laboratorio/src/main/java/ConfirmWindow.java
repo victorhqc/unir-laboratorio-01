@@ -30,8 +30,8 @@ public class ConfirmWindow extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         titleLabel = new javax.swing.JLabel();
-        medicineDescriptionLabel = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        descriptionLabel = new javax.swing.JLabel();
+        branchDescriptionLabel = new javax.swing.JLabel();
         acceptBtn = new javax.swing.JButton();
         cancelBtn = new javax.swing.JButton();
 
@@ -40,13 +40,18 @@ public class ConfirmWindow extends javax.swing.JFrame {
         titleLabel.setFont(new java.awt.Font("Helvetica", 0, 18)); // NOI18N
         titleLabel.setText("Pedido al distribuidor {{ distributor }}");
 
-        medicineDescriptionLabel.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
-        medicineDescriptionLabel.setText("{{ amount }} unidades del {{ kind }} {{ name }}.");
+        descriptionLabel.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        descriptionLabel.setText("{{ amount }} unidades del {{ kind }} {{ name }}.");
 
-        jLabel3.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
-        jLabel3.setText("Para la farmacia situada en {{ branch }}.");
+        branchDescriptionLabel.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        branchDescriptionLabel.setText("Para la farmacia situada en {{ branch }}.");
 
         acceptBtn.setText("Aceptar");
+        acceptBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                acceptBtnMouseReleased(evt);
+            }
+        });
         acceptBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 acceptBtnActionPerformed(evt);
@@ -77,11 +82,11 @@ public class ConfirmWindow extends javax.swing.JFrame {
                         .addComponent(cancelBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(acceptBtn))
-                    .addComponent(medicineDescriptionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
+                    .addComponent(descriptionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(titleLabel)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(branchDescriptionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -90,9 +95,9 @@ public class ConfirmWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(titleLabel)
                 .addGap(18, 18, 18)
-                .addComponent(medicineDescriptionLabel)
+                .addComponent(descriptionLabel)
                 .addGap(12, 12, 12)
-                .addComponent(jLabel3)
+                .addComponent(branchDescriptionLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(acceptBtn)
@@ -130,29 +135,62 @@ public class ConfirmWindow extends javax.swing.JFrame {
     private void cancelBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelBtnMouseReleased
        this.dispose();
     }//GEN-LAST:event_cancelBtnMouseReleased
+
+    private void acceptBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acceptBtnMouseReleased
+        System.out.println("Pedido enviado");
+        this.dispose();
+    }//GEN-LAST:event_acceptBtnMouseReleased
     
     private void setData() {
         this.setTitle();
+        this.setDescription();
+        this.setBranchesDescription();
     }
     
     private void setTitle() {
-        String title = this.titleLabel.getText();
-        String updated = title.replaceAll(
+        String rawTitle = this.titleLabel.getText();
+        String title = rawTitle.replaceAll(
                 "\\{\\{ distributor \\}\\}",
                 this.order.getDistributorName()
         );
         
-        this.titleLabel.setText(updated);
+        this.titleLabel.setText(title);
+    }
+    
+    private void setDescription() {
+        String rawDescription = this.descriptionLabel.getText();
+        String description = rawDescription.replaceAll(
+                "\\{\\{ amount \\}\\}",
+                String.valueOf(this.order.getAmount())
+        ).replaceAll(
+                "\\{\\{ kind \\}\\}",
+                this.order.getKindName()
+        ).replaceAll(
+                "\\{\\{ name \\}\\}",
+                this.order.getName()
+        );
+        
+        this.descriptionLabel.setText(description);
+    }
+    
+    private void setBranchesDescription() {
+        String rawBranchesDescription = this.branchDescriptionLabel.getText();
+        String branchesDescription = rawBranchesDescription.replaceAll(
+                "\\{\\{ branch \\}\\}",
+                this.order.getBranchAddresses()
+        );
+        
+        this.branchDescriptionLabel.setText(branchesDescription);
     }
     
     private MedicineOrder order;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton acceptBtn;
+    private javax.swing.JLabel branchDescriptionLabel;
     private javax.swing.JButton cancelBtn;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel descriptionLabel;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel medicineDescriptionLabel;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }
