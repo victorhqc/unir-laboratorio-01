@@ -334,16 +334,14 @@ public class MainWindow extends javax.swing.JFrame {
         this.medicineBranchSecondary.setSelected(false);
     }
     
-    private void validateInputs() {
-        if (
-                !this.validateName()||
-                !this.validateKind() ||
-                !this.validateAmount() ||
-                !this.validateDistributor() ||
-                !this.validateBranch()
-            ) {
-            return;
-        }
+    private boolean validateInputs() {
+        return (
+                this.validateName() &&
+                this.validateKind() &&
+                this.validateAmount() &&
+                this.validateDistributor() &&
+                this.validateBranch()
+        );
     }
     
     private boolean validateName() {
