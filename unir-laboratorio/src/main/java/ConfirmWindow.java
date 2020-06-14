@@ -53,6 +53,11 @@ public class ConfirmWindow extends javax.swing.JFrame {
         });
 
         cancelBtn.setText("Cancelar");
+        cancelBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                cancelBtnMouseReleased(evt);
+            }
+        });
         cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelBtnActionPerformed(evt);
@@ -120,6 +125,11 @@ public class ConfirmWindow extends javax.swing.JFrame {
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cancelBtnActionPerformed
+
+    private void cancelBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelBtnMouseReleased
+       this.dispose();
+    }//GEN-LAST:event_cancelBtnMouseReleased
+    
     
     private MedicineOrder order;
 
