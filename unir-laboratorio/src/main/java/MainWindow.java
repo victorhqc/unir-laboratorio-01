@@ -313,6 +313,8 @@ public class MainWindow extends javax.swing.JFrame {
         
         confirm.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         confirm.setVisible(true);
+        
+        this.emptyValues();
     }//GEN-LAST:event_confirmBtnMouseReleased
 
     /**
