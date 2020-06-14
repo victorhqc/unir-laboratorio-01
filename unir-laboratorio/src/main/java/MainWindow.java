@@ -1,3 +1,10 @@
+import java.util.Enumeration;
+import javax.swing.AbstractButton;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+import java.util.List;
+import java.util.ArrayList;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -287,7 +294,20 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelBtnMouseReleased
 
     private void confirmBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmBtnMouseReleased
-        this.validateInputs();
+        if (!this.validateInputs()){
+            return;
+        }
+        
+        MedicineKind kind = new MedicineKind(this.getMedicineKind());
+        Distributor distributor = new Distributor(this.getDistributorName());
+        
+        MedicineOrder medicineOrder = new MedicineOrder(
+                this.getMedicineName(),
+                this.getMedicineAmount(),
+                kind,
+                distributor,
+                this.getChosenPharmacyBranches()
+        );
     }//GEN-LAST:event_confirmBtnMouseReleased
 
     /**
@@ -378,20 +398,9 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private boolean isValidAmount() {
-        String amountStr = this.medicineAmount.getText();
-        
-        if (amountStr.length() <= 0) {
-            return false;
-        }
+        int amount = this.getMedicineAmount();
 
-        try {
-            int amount = Integer.parseInt(amountStr);
-        
-            return amount >= 0;
-        } catch (Exception e) {
-            return false;
-        }
-        
+        return amount > 0;
     }
     
     private boolean validateDistributor() {
@@ -423,6 +432,56 @@ public class MainWindow extends javax.swing.JFrame {
         this.errorLabelAmount.setVisible(false);
         this.errorLabelDistributor.setVisible(false);
         this.errorLabelBranch.setVisible(false);
+    }
+    
+    private String getMedicineName() {
+        return this.medicineName.getText();
+    }
+    
+    private int getMedicineAmount() {
+        String amountStr = this.medicineAmount.getText();
+        
+        try {
+            return Integer.parseInt(amountStr);
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+    
+    private String getMedicineKind() {
+        return this.medicineKind.getSelectedItem().toString();
+    }
+    
+    private String getDistributorName() {
+        for (Enumeration<AbstractButton> buttons = this.medicineDistributorBtnGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+            
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+        
+        return null;
+    }
+    
+    private PharmacyBranch[] getChosenPharmacyBranches() {
+        List<PharmacyBranch> pharmacies = new ArrayList<PharmacyBranch>();
+        
+        if (this.medicineBranchMain.isSelected()) {
+            PharmacyBranch mainPharmacy = new PharmacyBranch("main");
+            pharmacies.add(mainPharmacy);
+        }
+        
+        if (this.medicineBranchSecondary.isSelected()) {
+            PharmacyBranch secondaryPharmacy = new PharmacyBranch("secondary");
+            pharmacies.add(secondaryPharmacy);
+        }
+        
+        PharmacyBranch[] pharmaciesArr = pharmacies.toArray(
+                new PharmacyBranch[pharmacies.size()]
+        );
+        
+        return pharmaciesArr;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
